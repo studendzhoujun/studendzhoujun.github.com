@@ -5,8 +5,8 @@
   <link rel="shortcut icon" href="img/favicon.ico" />
   <title>studentzhoujun</title>
   <style>
-     *{margin:0;padding:0;}
-     body{background:#111;}
+     *{margin:0;padding:0;list-style:none;}
+     body{background:#ccc;}
       .box{width:200px;height:200px;margin:200px auto;position:relative;left:0;top:0;-webkit-transform-style:preserve-3d;-webkit-transform:perspective(800px) rotateX(30deg) rotateY(30deg);-webkit-transition:2s all ease;}
       .box div{width:100%;height:100%;position:absolute;left:0;top:0;}
      .left{-webkit-transform:translateX(-100px) rotateY(-90deg);background:url(img/d.jpg) -0px -240px;}
@@ -17,30 +17,32 @@
       .front{-webkit-transform:translateZ(100px);background:url(img/d.jpg) -200px -240px;}
       ul{width:300px;height:100px;overflow:hidden;position:absolute;left:100px;top:100px;}
       li{width:100px;height:100px;border-radius:50%;float:left;text-align:center;line-height:100px;}
-      li.sina{background:pink;}
-      li.qq{background:yellow;}
-      li.weixin{background:#909;}
+      li.sina{background:url(img/sina.png) no-repeat;}
+      li.qq{background:url(img/qq.png) no-repeat;}
+      .fen{width:72px;height:72px;background:url(img/fen.png) no-repeat;position:fixed;top:0px;left:0px;}
+      .fen1{width:72px;height:72px;background:url(img/fen1.png) no-repeat;position:fixed;top:0px;left:0px;}
+      .hide{display:none;position:fixed;top:10px;left:100px;}
+      .on{display:block;position:fixed;top:10px;left:100px;}
   </style>
   <script src="js/share-test-1.js"></script>
-  <script src="http://res.wx.qq.com/open/js/jweixin-1.0.0.js"></script>
   <script>
        window.onload=function(){
           var oBox=document.querySelector('.box')
           var dX=30;
           var dY=30;
-          
-                setInterval(function(){
-                    dX+=3;
-                    dY+=5;
-              oBox.style.WebkitTransform='rotateX('+dX+'deg) rotateY('+dY+'deg)';
-              },100)
-                var oSina=document.querySelector('.sina');
+          setInterval(function(){
+            dX+=3;
+            dY+=5;
+          oBox.style.WebkitTransform='rotateX('+dX+'deg) rotateY('+dY+'deg)';
+          },100)
+            var oSina=document.querySelector('.sina');
             var oQQ=document.querySelector('.qq');
-            var oWeixin=document.querySelector('.weixin')
+            var oShare=document.querySelector('#share');
+            var oSharebox=document.querySelector('#sharebox')
             var url=location.href;
             var title='立体魔方';
             var desc='this is mypicture';
-            var imgsrc='http://pic14.nipic.com/20110522/7411759_164157418126_2.jpg';
+            var imgsrc='img/tx.png';
             oSina.onclick=function(){
                    var oS=new Share(url,title,desc,imgsrc);
                    oS.toSina();
@@ -50,29 +52,33 @@
                    oS.toQQZone();
              
             };
-             oWeixin.onclick=function(){
-                   var oS=new Share(url,title,desc,imgsrc);
-                   oS.toWeixin();
-             
-            };
-
+            oShare.onclick=function(){
+               var flag=this.className;
+               if(flag=='fen'){
+                  this.className='fen1';
+                  oSharebox.className='on';
+               }else{
+                  this.className='fen';
+                  oSharebox.className='hide';
+               }
+            }
           
        };
   </script>
 </head>
 <body>
-  <div class="box">
-    <div class="front"></div>
-    <div class="back"></div>
-    <div class="left"></div>
-    <div class="right"></div>
-    <div class="top"></div>
-    <div class="bottom"></div>
-  </div>
-  <ul>
-    <li class="sina">分享到sina</li>
-    <li class="qq">分享到QQzone</li>
-    <li class="weixin">分享到weixin</li>
-  </ul>
+<div class="box">
+  <div class="front"></div>
+  <div class="back"></div>
+  <div class="left"></div>
+  <div class="right"></div>
+  <div class="top"></div>
+  <div class="bottom"></div>
+</div>
+<div id="share" class="fen"></div>
+<ul id="sharebox" class="hide">
+  <li class="sina"></li>
+  <li class="qq"></li>
+</ul>
 </body>
 </html>
